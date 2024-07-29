@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+    th {
+      background-color: #f4f4f4;
+    }
+    tbody tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+  </style>
+</head>
+<body>
+  <h2>Submitted Applications</h2>
+  <table id="applicationsTable">
+    <thead>
+      <tr>
+        <th>Timestamp</th>
+        <th>Business Name</th>
+        <th>Business Type</th>
+        <th>Owner Name(s)</th>
+        <th>Contact Number</th>
+        <th>Contact Email</th>
+        <th>Years Founded</th>
+        <th>Funding Amount</th>
+        <th>Purpose of Funding</th>
+        <th>Email Address</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Data rows will be inserted here -->
+    </tbody>
+  </table>
+  
+  <script>
+    function displayApplications(data) {
+      var tableBody = document.querySelector('#applicationsTable tbody');
+      tableBody.innerHTML = ''; // Clear existing rows
+  
+      if (data && data.length>1) {
+        data.slice(1).forEach(function(row) {
+          var tr = document.createElement('tr');
+          row.forEach(function(cell) {
+            var td = document.createElement('td');
+            td.textContent = cell;
+            tr.appendChild(td);
+          });
+          tableBody.appendChild(tr);
+        });
+      } else {
+        var tr = document.createElement('tr');
+        var td = document.createElement('td');
+        td.colSpan = 11; // Number of columns
+        td.textContent = 'No applications found.';
+        tr.appendChild(td);
+        tableBody.appendChild(tr);
+      }
+    }
+
+    google.script.run.withSuccessHandler(displayApplications).getApplications();
+
+  </script>
+</body>
+</html>
